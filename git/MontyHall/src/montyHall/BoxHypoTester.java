@@ -6,7 +6,7 @@ import java.util.Random;
 
 import javax.swing.*;
 
-public class Simulation {
+public class BoxHypoTester {
 	private int simulationsCompleted;
 	private String simulationType = "";
 	private static Data mData = new Data();
@@ -20,38 +20,38 @@ public class Simulation {
 	
 	public static void main(String[] args){
 		scenarioRan = Data.SWITCH;
-		setUpSimulation();
+		simulatePlay(100000);
 	}
 
 	/**
 	 * Allows user to choose # of simulations to run and what type
 	 */
-	private static void setUpSimulation() {
+	private static long[] simulatePlay(final long numberOfGames) {
 		// Create gui and let user decide how many times they wish to run the simulation
-		createGui();
-
-
-
-
-
-
-		JOptionPane pane = new JOptionPane();
-		String amount = pane.showInputDialog("Enter the amount of simulations you wish to run");
-		if(amount != null) {
-			try {
-				runSimulation(Integer.parseInt(amount));
-			} catch(Exception e){
-
-			}
-
-		}
+////		createGui();
+//
+//		JOptionPane pane = new JOptionPane();
+//		String amount = pane.showInputDialog("Enter the amount of simulations you wish to run");
+//		if(amount != null) {
+//			try {
+//				runSimulation(Integer.parseInt(amount));
+//			} catch(Exception e){
+//
+//			}
+//
+//		}
 		// runSimulation
-		
+
+		runSimulation(numberOfGames);
+
+		return mData.getResults();
 	}
+
+
 
 	private static void createGui() {
 		JFrame frame = new JFrame("Monty Hall");
-		JLabel title = new JLabel("Monty Hall Simulation");
+		JLabel title = new JLabel("Monty Hall BoxHypoTester");
 		JTextField amount = new JTextField(20);
 		JButton run = new JButton("RUN");
 		Font largeFont = new Font("SANS_SERIF", 1, 50);
@@ -85,7 +85,7 @@ public class Simulation {
 		frame.setVisible(true);
 	}
 
-	public static void runSimulation(int amount){
+	public static void runSimulation(long amount){
 		//runs a series of single simulations depending on how many times
 		//the simulation is to be ran
 		for(int i = 0; i < amount; i++) {
@@ -93,7 +93,8 @@ public class Simulation {
 			runSingleSimulation();
 		}
 		
-		System.out.println("The user won " + mData.getWins() + " and lost " + mData.getLosses() + " times");
+		System.out.println("The user winsSwitch: " + mData.getWinsSwitch() + " and winsKeep: " + mData.getWinsKeep() + " times");
+
 	}
 
 	public static void runSingleSimulation(){
@@ -148,43 +149,25 @@ public class Simulation {
 	private static void determineWinner() {
 		Box currentBox = boxes.get(0);
 
-		if(scenarioRan.equals(Data.SWITCH)){
-			switchBoxChoice(currentBox);
-		}
-
-		if(scenarioRan.equals(Data.KEEP_ORIGINAL)){
-			keepOriginalBox(currentBox);
-		}
-
-		if(scenarioRan.equals(Data.RANDOM)){
-			Random rando = new Random();
-			int choice = rando.nextInt(2) + 1;
-			switch (choice){
-				case 1:
-					switchBoxChoice(currentBox);
-					break;
-				case 2:
-					keepOriginalBox(currentBox);
-					break;
-			}
-		}
+		switchBoxChoice(currentBox);
+		keepOriginalBox(currentBox);
 	}
 
 	private static void switchBoxChoice(Box currentBox) {
 		if(currentBox.isChosen()){
             if(currentBox.getPrize()){
-                mData.increaseLosses();
+                mData.increaseLossesSwitch();
             }
             else{
-                mData.increaseWins();
+                mData.increaseWinsSwitch();
             }
         }
         else{
             if(currentBox.getPrize()){
-                mData.increaseWins();
+                mData.increaseWinsSwitch();
             }
             else{
-                mData.increaseLosses();
+                mData.increaseLossesSwitch();
             }
         }
 	}
@@ -192,18 +175,18 @@ public class Simulation {
 	private static void keepOriginalBox(Box currentBox) {
 		if(currentBox.isChosen()){
             if(currentBox.getPrize()){
-                mData.increaseWins();
+                mData.increaseWinsKeep();
             }
             else{
-                mData.increaseLosses();
+                mData.increaseLossesKeep();
             }
         }
         else{
             if(currentBox.getPrize()){
-                mData.increaseLosses();
+                mData.increaseLossesKeep();
             }
             else{
-                mData.increaseWins();
+                mData.increaseWinsKeep();
             }
         }
 	}
