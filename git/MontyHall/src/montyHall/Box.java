@@ -1,22 +1,14 @@
 package montyHall;
 
 public class Box {
-	private int id;
+	private char id;
 	private boolean containsPrize;
 	private boolean isChosen;
 	
-	public Box(int id) {
+	public Box(char id) {
 		this.id = id;
 	}
-	
-	public void setId(int id){
-		this.id = id;
-	}
-	
-	public int getId(){
-		return id;
-	}
-	
+
 	public boolean getPrize(){
 		return containsPrize;
 	}

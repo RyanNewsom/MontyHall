@@ -1,8 +1,6 @@
 package montyHall;
 
-import java.awt.*;
 import java.util.ArrayList;
-import javax.swing.*;
 
 public class BoxHypoTester {
 	private static boolean switchChoice;
@@ -16,34 +14,14 @@ public class BoxHypoTester {
     public static long[] results = new long[10];
 	
 	public static void main(String[] args){
-		simulatePlay(100000); // error thrown here ... ???
+		simulatePlay(100000);
 	}
 
 	/**
 	 * Allows user to choose # of simulations to run and what type
 	 */
 	private static long[] simulatePlay(final long numberOfGames) {
-		// Create gui and let user decide how many times they wish to run the simulation
-//		createGui();
-//
-//		JOptionPane pane = new JOptionPane();
-//		String amount = pane.showInputDialog("Enter the amount of simulations you wish to run");
-//		if(amount != null) {
-//			try {
-//				runSimulation(Integer.parseInt(amount));
-//			} catch(Exception e){
-//
-//			}
-//
-//		}
-		// runSimulation
-
 		runSimulation(numberOfGames);
-
-//		return mData.getResults(); // error was thrown here, fixed it
-
-        
-
         results[0] = mData.getWinsKeep();
         results[1] = mData.getWinsSwitch();
 
@@ -176,9 +154,9 @@ public class BoxHypoTester {
 	public static void setUpSingleSimulation() {
 
 		// create box objects
-		box1 = new Box(1);
-		box2 = new Box(2);
-		box3 = new Box(3);
+		box1 = new Box('a');
+		box2 = new Box('b');
+		box3 = new Box('c');
 
 		// set prize box randomly
 		Host monty = new Host();
