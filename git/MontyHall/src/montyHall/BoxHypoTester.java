@@ -2,8 +2,6 @@ package montyHall;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Random;
-
 import javax.swing.*;
 
 public class BoxHypoTester {
@@ -16,7 +14,7 @@ public class BoxHypoTester {
 	private static Box box3;
 	private static String scenarioRan;
 	private static ArrayList<Box> boxes = new ArrayList<Box>();
-	
+    public static long[] results;
 	
 	public static void main(String[] args){
 		scenarioRan = Data.SWITCH;
@@ -44,9 +42,15 @@ public class BoxHypoTester {
 
 		runSimulation(numberOfGames);
 
-		return mData.getResults(); // error thrown here ... ???
-	}
+//		return mData.getResults(); // error was thrown here, fixed it
 
+        
+
+        results[0] = mData.getWinsKeep();
+        results[1] = mData.getWinsSwitch();
+
+        return results;
+	}
 
 
 	private static void createGui() {
@@ -93,7 +97,7 @@ public class BoxHypoTester {
 			runSingleSimulation();
 		}
 
-        System.out.println("When the player kept their originial box they won " + mData.getWinsKeep() + " out of "
+        System.out.println("When the player kept their original box they won " + mData.getWinsKeep() + " out of "
                 + amount + " times");
         System.out.println("When the player switched their box choice they won " + mData.getWinsSwitch() + " out of "
                 + amount + " times");
