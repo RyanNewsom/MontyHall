@@ -6,9 +6,6 @@ public class Data {
 	private long winsKeep;
 	private long lossesKeep;
 	private String typeOfSimulation;
-	public static final String KEEP_ORIGINAL = "Keep_Original";
-	public static final String SWITCH = "Switch";
-	public static final String RANDOM = "Random";
 
 	public long[] results;
 	

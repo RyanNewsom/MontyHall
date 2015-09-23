@@ -5,19 +5,17 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 public class BoxHypoTester {
-	private int simulationsCompleted;
-	private String simulationType = "";
+	private static boolean switchChoice;
 	private static Data mData = new Data();
 	private static Person mPerson = new Person();
 	private static Box box1;
 	private static Box box2;
 	private static Box box3;
-	private static String scenarioRan;
+
 	private static ArrayList<Box> boxes = new ArrayList<Box>();
     public static long[] results = new long[10];
 	
 	public static void main(String[] args){
-		scenarioRan = Data.SWITCH;
 		simulatePlay(100000); // error thrown here ... ???
 	}
 
@@ -52,46 +50,15 @@ public class BoxHypoTester {
         return results;
 	}
 
-
-	private static void createGui() {
-		JFrame frame = new JFrame("Monty Hall");
-		JLabel title = new JLabel("Monty Hall BoxHypoTester");
-		JTextField amount = new JTextField(20);
-		JButton run = new JButton("RUN");
-		Font largeFont = new Font("SANS_SERIF", 1, 50);
-		Font mediumFont = new Font("SANS_SERIF", 0, 27);
-		Font smallFont = new Font("SANS_SERIF", 0, 20);
-		JRadioButton playerSwitch = new JRadioButton();
-		JRadioButton playerStay = new JRadioButton();
-		JRadioButton playerRand = new JRadioButton();
-		playerSwitch.setText("Switch choice");
-		playerStay.setText("Keep choice");
-		playerRand.setText("Random choice");
-		title.setFont(largeFont);
-		amount.setText("How many times should the scenario be ran?");
-		ButtonGroup group = new ButtonGroup();
-		group.add(playerSwitch);
-		group.add(playerStay);
-		group.add(playerRand);
-
-
-
-
-		frame.setBounds(200, 200, 1080, 700);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
-		JPanel panel = new JPanel();
-
-
-
-		frame.add(panel);
-		frame.setVisible(true);
-	}
-
 	public static void runSimulation(long amount){
 		//runs a series of single simulations depending on how many times
 		//the simulation is to be ran
+		switchChoice = true;
+		for(int i = 0; i < amount; i++) {
+			setUpSingleSimulation();
+			runSingleSimulation();
+		}
+		switchChoice = false;
 		for(int i = 0; i < amount; i++) {
 			setUpSingleSimulation();
 			runSingleSimulation();
@@ -100,7 +67,7 @@ public class BoxHypoTester {
         System.out.println("When the player kept their original box they won " + mData.getWinsKeep() + " out of "
                 + amount + " times");
         System.out.println("When the player switched their box choice they won " + mData.getWinsSwitch() + " out of "
-                + amount + " times");
+				+ amount + " times");
 
 	}
 
@@ -159,8 +126,12 @@ public class BoxHypoTester {
 	private static void determineWinner() {
 		Box currentBox = boxes.get(0);
 
-		switchBoxChoice(currentBox);
-		keepOriginalBox(currentBox);
+		if(switchChoice) {
+			switchBoxChoice(currentBox);
+		}
+		if(!switchChoice) {
+			keepOriginalBox(currentBox);
+		}
 	}
 
 	private static void switchBoxChoice(Box currentBox) {
