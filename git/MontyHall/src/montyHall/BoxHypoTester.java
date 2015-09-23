@@ -20,7 +20,7 @@ public class BoxHypoTester {
 	
 	public static void main(String[] args){
 		scenarioRan = Data.SWITCH;
-		simulatePlay(100000);
+		simulatePlay(100000); // error thrown here ... ???
 	}
 
 	/**
@@ -28,7 +28,7 @@ public class BoxHypoTester {
 	 */
 	private static long[] simulatePlay(final long numberOfGames) {
 		// Create gui and let user decide how many times they wish to run the simulation
-////		createGui();
+//		createGui();
 //
 //		JOptionPane pane = new JOptionPane();
 //		String amount = pane.showInputDialog("Enter the amount of simulations you wish to run");
@@ -44,7 +44,7 @@ public class BoxHypoTester {
 
 		runSimulation(numberOfGames);
 
-		return mData.getResults();
+		return mData.getResults(); // error thrown here ... ???
 	}
 
 
@@ -93,7 +93,7 @@ public class BoxHypoTester {
 			runSingleSimulation();
 		}
 		
-		System.out.println("The user winsSwitch: " + mData.getWinsSwitch() + " and winsKeep: " + mData.getWinsKeep() + " times");
+		System.out.println("The user winsSwitch: " + mData.getWinsSwitch() + " and winsKeep: " + mData.getWinsKeep() + " times ");
 
 	}
 
@@ -104,6 +104,7 @@ public class BoxHypoTester {
 		boxes.add(box3);
 		//run a scenario where the person chooses a box
 		int boxPick = mPerson.pickBox();
+
 		switch(boxPick){
 		case 1: 
 			box1.chooseBox();
@@ -116,9 +117,11 @@ public class BoxHypoTester {
 			break;
 		}
 		
-		//Removes a box that is not the prizebox at random.
-		Random rando = new Random();
-		int selector = (rando.nextInt(2) + 1);
+		//Removes a box that is not the prizebox at random
+
+		Host monty = new Host();
+		int selector = monty.revealEmpty();
+
 		switch(selector){
 		case 1:
 			for(int i = 0; i < 3; i++){
@@ -128,7 +131,7 @@ public class BoxHypoTester {
 				}
 			}
 			break;
-			
+
 		case 2:
 			for(int i = 2; i >= 0; i--){
 				if(boxes.get(i).getPrize() != true && boxes.get(i).isChosen() != true){
@@ -193,25 +196,26 @@ public class BoxHypoTester {
 
 
 	public static void setUpSingleSimulation() {
+
 		// create box objects
 		box1 = new Box(1);
 		box2 = new Box(2);
 		box3 = new Box(3);
-		
+
 		// set prize box randomly
-		Random rando = new Random();
-		int selector = (rando.nextInt(3) + 1);
-		
+		Host monty = new Host();
+		int selector = monty.setPrizeBox();
+
 		switch(selector) {
-			case 1: 
+			case 1:
 				box1.setPrize();
 				break;
-			case 2: 
+			case 2:
 				box2.setPrize();
 				break;
-			case 3: 
+			case 3:
 				box3.setPrize();
 				break;
-		}			
+		}
 	}
 }

@@ -40,7 +40,5 @@ public class Box {
 	public void removeChosen(){
 		isChosen = false;
 	}
-	
-	
-	
+
 }

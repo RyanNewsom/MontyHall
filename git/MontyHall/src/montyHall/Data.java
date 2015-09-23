@@ -47,7 +47,7 @@ public class Data {
 	}
 
 	public long[] getResults() {
-		results[0] = winsKeep;
+		results[0] = winsKeep;  // error thrown here ... hmmm, should I pass in the win results as parameters?
 		results[1] = winsSwitch;
 
 		return results;
