@@ -14,7 +14,7 @@ public class BoxHypoTester {
 	private static Box box3;
 	private static String scenarioRan;
 	private static ArrayList<Box> boxes = new ArrayList<Box>();
-    public static long[] results;
+    public static long[] results = new long[10];
 	
 	public static void main(String[] args){
 		scenarioRan = Data.SWITCH;
