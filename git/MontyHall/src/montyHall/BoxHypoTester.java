@@ -92,8 +92,11 @@ public class BoxHypoTester {
 			setUpSingleSimulation();
 			runSingleSimulation();
 		}
-		
-		System.out.println("The user winsSwitch: " + mData.getWinsSwitch() + " and winsKeep: " + mData.getWinsKeep() + " times ");
+
+        System.out.println("When the player kept their originial box they won " + mData.getWinsKeep() + " out of "
+                + amount + " times");
+        System.out.println("When the player switched their box choice they won " + mData.getWinsSwitch() + " out of "
+                + amount + " times");
 
 	}
 
