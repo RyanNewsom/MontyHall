@@ -1,16 +1,28 @@
 package montyHall;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Host {
 	
-	public int setPrizeBox() {
+	public ArrayList<Box> setPrizeBox(ArrayList<Box> boxes){
 
 		// set prize box randomly
 		Random rando = new Random();
 		int selector = (rando.nextInt(3) + 1);
+		switch(selector) {
+			case 1:
+				boxes.get(0).setPrize();
+				break;
+			case 2:
+				boxes.get(1).setPrize();
+				break;
+			case 3:
+				boxes.get(2).setPrize();
+				break;
+		}
+		return boxes;
 
-		return selector;
 	}
 	
 	public int revealEmpty() {

@@ -6,11 +6,12 @@ public class BoxHypoTester {
 	private static boolean switchChoice;
 	private static Data mData = new Data();
 	private static Person mPerson = new Person();
-	private static Box box1;
-	private static Box box2;
-	private static Box box3;
+	static Host mMontyHost = new Host();
+	private static Box mBoxA;
+	private static Box mBoxB;
+	private static Box mBoxC;
 
-	private static ArrayList<Box> boxes = new ArrayList<Box>();
+	private static ArrayList<Box> mBoxes = new ArrayList<Box>();
     public static long[] results = new long[10];
 	
 	public static void main(String[] args){
@@ -20,7 +21,7 @@ public class BoxHypoTester {
 	/**
 	 * Allows user to choose # of simulations to run and what type
 	 */
-	private static long[] simulatePlay(final long numberOfGames) {
+	public static long[] simulatePlay(final long numberOfGames) {
 		runSimulation(numberOfGames);
         results[0] = mData.getWinsKeep();
         results[1] = mData.getWinsSwitch();
@@ -28,7 +29,7 @@ public class BoxHypoTester {
         return results;
 	}
 
-	public static void runSimulation(long amount){
+	private static void runSimulation(long amount){
 		//runs a series of single simulations depending on how many times
 		//the simulation is to be ran
 		switchChoice = true;
@@ -49,36 +50,47 @@ public class BoxHypoTester {
 
 	}
 
-	public static void runSingleSimulation(){
-		boxes.clear();
-		boxes.add(box1);
-		boxes.add(box2);
-		boxes.add(box3);
-		//run a scenario where the person chooses a box
+	/**
+	 * Create boxes and the host places a prize inside it
+	 */
+	private static void setUpSingleSimulation() {
+		mBoxA = new Box('a');
+		mBoxB = new Box('b');
+		mBoxC = new Box('c');
+		mBoxes.clear();
+		mBoxes.add(mBoxA);
+		mBoxes.add(mBoxB);
+		mBoxes.add(mBoxC);
+
+		mBoxes = mMontyHost.setPrizeBox(mBoxes);
+	}
+
+	private static void runSingleSimulation(){
+		//[TODO] pass the person the box they pick, a box shouldn't pick itself
 		int boxPick = mPerson.pickBox();
 
 		switch(boxPick){
-		case 1: 
-			box1.chooseBox();
+		case 1:
+			mBoxA.chooseBox();
 			break;
-		case 2: 
-			box2.chooseBox();
+		case 2:
+			mBoxB.chooseBox();
 			break;
-		case 3: 
-			box3.chooseBox();
+		case 3:
+			mBoxC.chooseBox();
 			break;
 		}
-		
+
 		//Removes a box that is not the prizebox at random
 
 		Host monty = new Host();
 		int selector = monty.revealEmpty();
-
+		// [TODO] Change this so that the host removes the box's himself
 		switch(selector){
 		case 1:
 			for(int i = 0; i < 3; i++){
-				if(!boxes.get(i).getPrize() && !boxes.get(i).isChosen()){
-					boxes.remove(i);
+				if(!mBoxes.get(i).getPrize() && !mBoxes.get(i).isChosen()){
+					mBoxes.remove(i);
 					break;
 				}
 			}
@@ -86,8 +98,8 @@ public class BoxHypoTester {
 
 		case 2:
 			for(int i = 2; i >= 0; i--){
-				if(boxes.get(i).getPrize() != true && boxes.get(i).isChosen() != true){
-					boxes.remove(i);
+				if(mBoxes.get(i).getPrize() != true && mBoxes.get(i).isChosen() != true){
+					mBoxes.remove(i);
 					break;
 				}
 			}
@@ -102,7 +114,7 @@ public class BoxHypoTester {
 	 * Determines whether the person has won or not
 	 */
 	private static void determineWinner() {
-		Box currentBox = boxes.get(0);
+		Box currentBox = mBoxes.get(0);
 
 		if(switchChoice) {
 			switchBoxChoice(currentBox);
@@ -151,27 +163,5 @@ public class BoxHypoTester {
 	}
 
 
-	public static void setUpSingleSimulation() {
 
-		// create box objects
-		box1 = new Box('a');
-		box2 = new Box('b');
-		box3 = new Box('c');
-
-		// set prize box randomly
-		Host monty = new Host();
-		int selector = monty.setPrizeBox();
-
-		switch(selector) {
-			case 1:
-				box1.setPrize();
-				break;
-			case 2:
-				box2.setPrize();
-				break;
-			case 3:
-				box3.setPrize();
-				break;
-		}
-	}
 }
