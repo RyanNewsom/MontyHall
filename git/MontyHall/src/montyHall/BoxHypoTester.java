@@ -22,10 +22,8 @@ public class BoxHypoTester {
 	 */
 	public static long[] simulatePlay(final long numberOfGames) {
 		runSimulation(numberOfGames);
-        results[0] = mData.getWinsKeep();
-        results[1] = mData.getWinsSwitch();
 
-        return results;
+        return mData.getResults();
 	}
 
 	/**
