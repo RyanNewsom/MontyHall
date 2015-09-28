@@ -5,7 +5,6 @@ public class Data {
 	private long lossesSwitch;
 	private long winsKeep;
 	private long lossesKeep;
-	private String typeOfSimulation;
 
 	public long[] results;
 	
@@ -23,28 +22,16 @@ public class Data {
 		winsKeep++;
 	}
 
-	public long getLossesSwitch() {
-		return lossesSwitch;
-	}
 	public void increaseLossesSwitch() {
 		lossesSwitch++;
-	}
-	public long getLossesKeep() {
-		return lossesKeep;
 	}
 	public void increaseLossesKeep() {
 		lossesKeep++;
 	}
 
-	public String getTypeOfSimulation() {
-		return typeOfSimulation;
-	}
-	public void setTypeOfSimulation(String typeOfSimulation) {
-		this.typeOfSimulation = typeOfSimulation;
-	}
 
 	public long[] getResults() {
-		results[0] = winsKeep;  // error thrown here ... ???
+		results[0] = winsKeep;
 		results[1] = winsSwitch;
 
 		return results;

@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Host {
-	
-	public ArrayList<Box> setPrizeBox(ArrayList<Box> boxes){
 
-		// set prize box randomly
+	/**
+	 * The host places the prize inside of a box
+	 * @param boxes
+	 * @return
+	 */
+	public ArrayList<Box> setPrizeBox(ArrayList<Box> boxes){
 		Random rando = new Random();
 		int selector = (rando.nextInt(3) + 1);
 		switch(selector) {
@@ -24,9 +27,13 @@ public class Host {
 		return boxes;
 
 	}
-	
+
+	/**
+	 * Reveals a box that does not contain a prize thus it is no longer in the game
+	 * @param boxes - the boxes
+	 * @return - the left over boxes
+	 */
 	public ArrayList<Box> revealEmpty(ArrayList<Box> boxes) {
-		//Removes a box that is not the prizebox at random.
 		Random rando = new Random();
 		int selector = (rando.nextInt(2) + 1);
 		switch(selector){

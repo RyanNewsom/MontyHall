@@ -3,7 +3,6 @@ package montyHall;
 import java.util.ArrayList;
 
 public class BoxHypoTester {
-	private static boolean switchChoice;
 	private static Data mData = new Data();
 	private static Person mPerson = new Person();
 	private static Host mMontyHost = new Host();
@@ -34,23 +33,20 @@ public class BoxHypoTester {
 	 * @param amount - amount to run the simulation
 	 */
 	private static void runSimulation(long amount){
-		switchChoice = true;
 		for(int i = 0; i < amount; i++) {
 			setUpSingleSimulation();
 			runSingleSimulation();
 		}
-		switchChoice = false;
 		for(int i = 0; i < amount; i++) {
 			mPerson.setSwitchBoxStrategy(true);
 			setUpSingleSimulation();
 			runSingleSimulation();
 		}
 
-        System.out.println("When the player kept their original box they won " + mData.getWinsKeep() + " out of "
-                + amount + " times");
-        System.out.println("When the player switched their box choice they won " + mData.getWinsSwitch() + " out of "
-				+ amount + " times");
-
+//        System.out.println("When the player kept their original box they won " + mData.getWinsKeep() + " out of "
+//                + amount + " times");
+//        System.out.println("When the player switched their box choice they won " + mData.getWinsSwitch() + " out of "
+//				+ amount + " times");
 	}
 
 	/**
