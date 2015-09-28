@@ -6,7 +6,7 @@ public class BoxHypoTester {
 	private static boolean switchChoice;
 	private static Data mData = new Data();
 	private static Person mPerson = new Person();
-	static Host mMontyHost = new Host();
+	private static Host mMontyHost = new Host();
 	private static Box mBoxA;
 	private static Box mBoxB;
 	private static Box mBoxC;
@@ -14,9 +14,9 @@ public class BoxHypoTester {
 	private static ArrayList<Box> mBoxes = new ArrayList<Box>();
     public static long[] results = new long[10];
 	
-	public static void main(String[] args){
-		simulatePlay(100000);
-	}
+//	public static void main(String[] args){
+//		simulatePlay(100000);
+//	}
 
 	/**
 	 * Allows user to choose # of simulations to run and what type
@@ -29,9 +29,11 @@ public class BoxHypoTester {
         return results;
 	}
 
+	/**
+	 * Will set up a simulation and run it until the amount desired is reached
+	 * @param amount - amount to run the simulation
+	 */
 	private static void runSimulation(long amount){
-		//runs a series of single simulations depending on how many times
-		//the simulation is to be ran
 		switchChoice = true;
 		for(int i = 0; i < amount; i++) {
 			setUpSingleSimulation();
@@ -39,6 +41,7 @@ public class BoxHypoTester {
 		}
 		switchChoice = false;
 		for(int i = 0; i < amount; i++) {
+			mPerson.setSwitchBoxStrategy(true);
 			setUpSingleSimulation();
 			runSingleSimulation();
 		}
@@ -66,102 +69,34 @@ public class BoxHypoTester {
 	}
 
 	private static void runSingleSimulation(){
-		//[TODO] pass the person the box they pick, a box shouldn't pick itself
-		int boxPick = mPerson.pickBox();
-
-		switch(boxPick){
-		case 1:
-			mBoxA.chooseBox();
-			break;
-		case 2:
-			mBoxB.chooseBox();
-			break;
-		case 3:
-			mBoxC.chooseBox();
-			break;
-		}
-
-		//Removes a box that is not the prizebox at random
-
-		Host monty = new Host();
-		int selector = monty.revealEmpty();
-		// [TODO] Change this so that the host removes the box's himself
-		switch(selector){
-		case 1:
-			for(int i = 0; i < 3; i++){
-				if(!mBoxes.get(i).getPrize() && !mBoxes.get(i).isChosen()){
-					mBoxes.remove(i);
-					break;
-				}
-			}
-			break;
-
-		case 2:
-			for(int i = 2; i >= 0; i--){
-				if(mBoxes.get(i).getPrize() != true && mBoxes.get(i).isChosen() != true){
-					mBoxes.remove(i);
-					break;
-				}
-			}
-			break;
-		}
-
+		mBoxes = mPerson.pickBox(mBoxes);
+		mBoxes = mMontyHost.revealEmpty(mBoxes);
 		determineWinner();
-
 	}
 
 	/**
 	 * Determines whether the person has won or not
 	 */
 	private static void determineWinner() {
-		Box currentBox = mBoxes.get(0);
-
-		if(switchChoice) {
-			switchBoxChoice(currentBox);
+		if(mPerson.isSwitchingBox()){
+			mBoxes = mPerson.switchBox(mBoxes);
+			Boolean winner = mPerson.openBox();
+			if(winner){
+				mData.increaseWinsSwitch();
+			}
+			else{
+				mData.increaseLossesSwitch();
+			}
 		}
-		if(!switchChoice) {
-			keepOriginalBox(currentBox);
+		else{
+			Boolean winner = mPerson.openBox();
+			if(winner){
+				mData.increaseWinsKeep();
+			}
+			else{
+				mData.increaseLossesKeep();
+			}
 		}
+
 	}
-
-	private static void switchBoxChoice(Box currentBox) {
-		if(currentBox.isChosen()){
-            if(currentBox.getPrize()){
-                mData.increaseLossesSwitch();
-            }
-            else{
-                mData.increaseWinsSwitch();
-            }
-        }
-        else{
-            if(currentBox.getPrize()){
-                mData.increaseWinsSwitch();
-            }
-            else{
-                mData.increaseLossesSwitch();
-            }
-        }
-	}
-
-	private static void keepOriginalBox(Box currentBox) {
-		if(currentBox.isChosen()){
-            if(currentBox.getPrize()){
-                mData.increaseWinsKeep();
-            }
-            else{
-                mData.increaseLossesKeep();
-            }
-        }
-        else{
-            if(currentBox.getPrize()){
-                mData.increaseLossesKeep();
-            }
-            else{
-                mData.increaseWinsKeep();
-            }
-        }
-	}
-
-
-
 }
