@@ -13,9 +13,9 @@ public class BoxHypoTester {
 	private static ArrayList<Box> mBoxes = new ArrayList<Box>();
     public static long[] results = new long[10];
 	
-	public static void main(String[] args){
-		simulatePlay(100000);
-	}
+//	public static void main(String[] args){
+//		simulatePlay(100000);
+//	}
 
 	/**
 	 * Allows user to choose # of simulations to run and what type
