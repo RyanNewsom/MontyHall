@@ -1,36 +1,32 @@
 package montyHall;
 
 public class Data {
-	private int wins;
-	private int losses;
-	private String typeOfSimulation;
-	public static final String KEEP_ORIGINAL = "Keep_Original";
-	public static final String SWITCH = "Switch";
-	public static final String RANDOM = "Random";
-	
-	
-	public int getWins() {
-		return wins;
+	private long winsSwitch;
+	private long lossesSwitch;
+	private long winsKeep;
+	private long lossesKeep;
+	public long[] results;
+
+	public void increaseWinsSwitch() {
+		winsSwitch++;
 	}
-	public void increaseWins() {
-		wins++;
+	public void increaseWinsKeep() {
+		winsKeep++;
 	}
-	public int getLosses() {
-		return losses;
+
+	public void increaseLossesSwitch() {
+		lossesSwitch++;
 	}
-	public void increaseLosses() {
-		losses++;
+	public void increaseLossesKeep() {
+		lossesKeep++;
 	}
-	public String getTypeOfSimulation() {
-		return typeOfSimulation;
+
+
+	public long[] getResults() {
+		results[0] = winsKeep;
+		results[1] = winsSwitch;
+
+		return results;
 	}
-	public void setTypeOfSimulation(String typeOfSimulation) {
-		this.typeOfSimulation = typeOfSimulation;
-	}
-	
-	
-	
-	
-	
 	
 }

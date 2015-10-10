@@ -5,7 +5,7 @@ public class Data {
 	private long lossesSwitch;
 	private long winsKeep;
 	private long lossesKeep;
-	public long[] results;
+	public long[] results = new long[10];
 
 	public void increaseWinsSwitch() {
 		winsSwitch++;
